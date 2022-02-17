@@ -6,8 +6,8 @@ use App\Models\SnowArmy;
 
 class SnowArmyFactory implements ArmyFactory
 {
-    public function createArmy(int $numberOfSoldiers): Models\Army
+    public function createArmy(string $name, int $numberOfSoldiers): Models\Army
     {
-        return new SnowArmy($numberOfSoldiers);
+        return new SnowArmy($name, $numberOfSoldiers);
     }
 }

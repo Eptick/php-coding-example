@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\{Service, Output};
+use App\Models\Army;
 use App\Enums\{TimeOfDay, Weather};
 
 class NarationService extends Service
@@ -55,8 +56,21 @@ class NarationService extends Service
                 $this->output->write("The weather seems to shift from time to time, but it's about to rain bullets."); // phpcs:ignore
         }
     }
+
     public function describeTemperature($temperature)
     {
         $this->output->write("It's $temperature °C outside.");
+    }
+
+    public function declareStalemate()
+    {
+        $this->output->write("It's a stalemate");
+    }
+
+    public function declareWinner(Army &$army)
+    {
+        $name = $army->getName();
+        $soldiersLeft = $army->getHealth();
+        $this->write("$name wins with $soldiersLeft soldiers left");
     }
 }

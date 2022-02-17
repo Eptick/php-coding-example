@@ -28,8 +28,14 @@ class ArmyFightService extends Service
         $this->setTheMood();
         $snowArmyFactory = new SnowArmyFactory();
 
-        $this->army1 = $snowArmyFactory->createArmy($army1);
-        $this->army2 = $snowArmyFactory->createArmy($army2);
+        $this->army1 = $snowArmyFactory->createArmy("First army", $army1);
+        $this->army2 = $snowArmyFactory->createArmy("Second army", $army2);
+
+        while (!$this->isGameOver()) {
+            $this->takeTurn();
+            $this->naration->write("turn");
+        }
+        $this->determineTheWinner();
     }
 
     private function setTheMood()
@@ -40,5 +46,27 @@ class ArmyFightService extends Service
         $this->naration->describeWeather($this->weather);
         $this->temperature = $this->weatherService->getTemperature();
         $this->naration->describeTemperature($this->temperature);
+    }
+
+    private function takeTurn()
+    {
+        $this->army1->attack($this->army2);
+        $this->army2->attack($this->army1);
+    }
+
+    private function isGameOver()
+    {
+        return $this->army1->isDead() || $this->army2->isDead();
+    }
+
+    private function determineTheWinner()
+    {
+        if ($this->army1->getHealth() == $this->army2->getHealth()) {
+            $this->naration->declareStalemate();
+        } elseif ($this->army1->getHealth() > $this->army2->getHealth()) {
+            $this->naration->declareWinner($this->army1);
+        } else {
+            $this->naration->declareWinner($this->army2);
+        }
     }
 }
