@@ -4,6 +4,7 @@ namespace App\Enums;
 
 use ReflectionClass;
 
+// PHPCS Does not support ENUMS so this old method is here
 abstract class BasicEnum
 {
     private static $constCacheArray = null;
