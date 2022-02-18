@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Service;
+use App\{Service, SnowArmyFactory};
 use App\Models\Army;
-use App\SnowArmyFactory;
 use App\Enums\TimeOfDay;
+use App\Models\Reports\Report;
 
 class ArmyFightService extends Service
 {
@@ -50,8 +50,10 @@ class ArmyFightService extends Service
 
     private function takeTurn()
     {
-        $this->army1->attack($this->army2);
-        $this->army2->attack($this->army1);
+        $report = $this->army1->attack($this->army2);
+        $this->naration->write($report->getContent());
+        $report = $this->army2->attack($this->army1);
+        $this->naration->write($report->getContent());
     }
 
     private function isGameOver()
@@ -61,12 +63,18 @@ class ArmyFightService extends Service
 
     private function determineTheWinner()
     {
-        if ($this->army1->getHealth() == $this->army2->getHealth()) {
+        if ($this->isStalemate()) {
             $this->naration->declareStalemate();
         } elseif ($this->army1->getHealth() > $this->army2->getHealth()) {
             $this->naration->declareWinner($this->army1);
         } else {
             $this->naration->declareWinner($this->army2);
         }
+    }
+
+    private function isStalemate()
+    {
+        return ($this->army1->getHealth() == $this->army2->getHealth())
+            || ($this->army1->getHealth() < 0 && $this->army2->getHealth() < 0);
     }
 }

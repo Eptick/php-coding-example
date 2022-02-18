@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Reports\{Report, BattleReportBuilder};
+
 abstract class BasicArmy implements Army
 {
     private string $name;
     protected int $attackDamage = 10;
-    protected $defendPower = 2;
     private $numberOfSoldiers;
 
     public function __construct($name, $num = 10,)
@@ -20,19 +21,26 @@ abstract class BasicArmy implements Army
         return $this->name;
     }
 
-    public function attack($army)
+    public function attack($army): Report
     {
-        $army->defend($this);
+        return (new BattleReportBuilder())
+            ->who($this)
+            ->dealtDamage($army->defend($this))
+            ->to($army);
     }
 
-    public function defend($army)
+    public function defend($army): int
     {
-        $this->takeDamage($army->getAttackDamage());
+        return $this->takeDamage($army->getAttackDamage());
     }
 
-    private function takeDamage($dmg)
+    private function takeDamage($dmg): int
     {
-        $this->numberOfSoldiers -= max(0, $dmg - $this->defendPower);
+        $strengthDifference = $this->getAttackDamage() - $dmg;
+        // formula taken and modified from civilization 6 combat mechanics
+        $dmg = round(10 * pow(M_EULER, 0.4 * $strengthDifference) * (rand(80, 120) / 100));
+        $this->numberOfSoldiers -= $dmg;
+        return $dmg;
     }
 
     public function getAttackDamage(): int

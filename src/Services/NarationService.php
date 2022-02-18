@@ -24,7 +24,7 @@ class NarationService extends Service
     {
         switch ($timeOfDay) {
             case TimeOfDay::MORNING:
-                $this->output->write("The sun has just come up, the soldiers are waking up fresh, getting readyfor a bloodbath. The air smells like morning dew and gunpowder"); // phpcs:ignore
+                $this->output->write("The sun has just come up, the soldiers are waking up fresh, getting ready for a bloodbath. The air smells like morning dew and gunpowder"); // phpcs:ignore
                 break;
             case TimeOfDay::DAY:
                 $this->output->write("The day has started, the soldiers are agited and that makes them more dangerous. A perfect oportunity for the brawlers."); // phpcs:ignore
@@ -64,7 +64,7 @@ class NarationService extends Service
 
     public function declareStalemate()
     {
-        $this->output->write("It's a stalemate");
+        $this->output->write("Everybody died. It's a stalemate");
     }
 
     public function declareWinner(Army &$army)
