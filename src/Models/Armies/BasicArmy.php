@@ -22,6 +22,11 @@ abstract class BasicArmy implements Army
         return $this->name;
     }
 
+    public function getType(): string
+    {
+        return (new \ReflectionClass($this))->getShortName();
+    }
+
     public function attack($army): Report
     {
         return (new BattleReportBuilder())

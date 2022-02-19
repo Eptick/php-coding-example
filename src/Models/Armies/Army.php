@@ -8,6 +8,7 @@ use App\Models\Reports\Report;
 interface Army
 {
     public function getName(): string;
+    public function getType(): string;
 
     public function attack(Army $army);
     public function defend(Army $army);

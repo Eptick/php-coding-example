@@ -22,6 +22,13 @@ class NarationService extends Service
         $this->output->write($content);
     }
 
+    public function describeNewArmy(Army $army)
+    {
+        $type = $army->getType();
+        $name = $army->getName();
+        return $this->output->write("A new $type called $name has appeared on the battlefield");
+    }
+
     public function describeTime($time)
     {
         return $this->output->write("The time is $time hours. That's military time for you fresh out the academy.");

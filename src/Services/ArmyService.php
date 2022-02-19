@@ -37,11 +37,13 @@ class ArmyService extends Service
         foreach ($numberOfSoldiers as $key => $value) {
             $name = "Army " . $key + 1;
             $factory =  $this->getRandomArmyFactory();
-            $this->armies[] = call_user_func(
+            $army = call_user_func(
                 [$factory, 'createArmy'],
                 $name,
                 $value,
             );
+            $this->naration->describeNewArmy($army);
+            $this->armies[] = $army;
         }
     }
 
