@@ -15,7 +15,10 @@ class QueryParameterService extends Service
 
     public function getQueryParameters()
     {
-        return array_map(array($this, 'getQueryIntegerValue'), $this->parameters);
+        return array_map(
+            array($this, 'getQueryIntegerValue'),
+            $this->parameters
+        );
     }
 
     private function getQueryIntegerValue($name)
@@ -34,7 +37,7 @@ class QueryParameterService extends Service
     {
         $val = @$_GET[$name];
         if (!isset($val) || !is_numeric($val) || intval($val) <= 0) {
-            throw new \Exception("$name query parameter needs to be set to a positive integer larger than 0");
+            throw new \Exception("$name query parameter needs to be set to a positive integer larger than 0"); // phpcs:ignore
         }
     }
 }

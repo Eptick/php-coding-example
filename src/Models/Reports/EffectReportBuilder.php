@@ -31,7 +31,8 @@ class EffectReportBuilder extends BasicReport
         $this->content .= $this->base->who;
         if (!empty($this->base->damage)) {
             $effect = $this->base->damage < 0 ? 'decresed' : 'incresed';
-            $this->content .= " had it's damage $effect by " . $this->base->damage;
+            $this->content .= " had it's damage $effect by "
+                . $this->base->damage;
         }
         if (!empty($this->base->bodyCount)) {
             $effect = $this->base->bodyCount < 0 ? 'decresed' : 'incresed';

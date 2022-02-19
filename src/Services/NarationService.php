@@ -26,12 +26,12 @@ class NarationService extends Service
     {
         $type = $army->getType();
         $name = $army->getName();
-        return $this->output->write("A new $type called $name has appeared on the battlefield");
+        return $this->output->write("A new $type called $name has appeared on the battlefield"); // phpcs:ignore
     }
 
     public function describeTime($time)
     {
-        return $this->output->write("The time is $time hours. That's military time for you fresh out the academy.");
+        return $this->output->write("The time is $time hours. That's military time for you fresh out the academy."); // phpcs:ignore
     }
 
     public function describeTimeOfDay($timeOfDay)
