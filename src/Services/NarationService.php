@@ -20,6 +20,11 @@ class NarationService extends Service
         $this->output->write($content);
     }
 
+    public function describeTime($time)
+    {
+        return $this->output->write("The time is $time hours. That's military time for you fresh out the academy.");
+    }
+
     public function describeTimeOfDay($timeOfDay)
     {
         switch ($timeOfDay) {
@@ -60,6 +65,11 @@ class NarationService extends Service
     public function describeTemperature($temperature)
     {
         $this->output->write("It's $temperature °C outside.");
+    }
+
+    public function describeBattleStarting()
+    {
+        $this->output->write("One of the soildiers peeks his head, the other army notices. Shots fired. People are yelling, this is a war alright"); // phpcs:ignore
     }
 
     public function declareStalemate()

@@ -16,11 +16,13 @@ class ArmyFightService extends Service
     private float $temperature;
     private NarationService $naration;
     private WeatherService $weatherService;
+    private TimeService $timeService;
 
     protected function __construct()
     {
         $this->naration = NarationService::getInstance();
         $this->weatherService = WeatherService::getInstance();
+        $this->timeService = TimeService::getInstance();
     }
 
     public function initiateFight($army1, $army2)
@@ -31,6 +33,8 @@ class ArmyFightService extends Service
         $this->army1 = $snowArmyFactory->createArmy("First army", $army1);
         $this->army2 = $snowArmyFactory->createArmy("Second army", $army2);
 
+
+        $this->naration->describeBattleStarting();
         while (!$this->isGameOver()) {
             $this->takeTurn();
             $this->naration->write("turn");
@@ -40,7 +44,8 @@ class ArmyFightService extends Service
 
     private function setTheMood()
     {
-        $this->timeOfDay = TimeService::getInstance()->getTimeOfDay();
+        $this->naration->describeTime($this->timeService->getHours());
+        $this->timeOfDay = $this->timeService->getTimeOfDay();
         $this->naration->describeTimeOfDay($this->timeOfDay);
         $this->weather = $this->weatherService->getWeather();
         $this->naration->describeWeather($this->weather);
@@ -75,6 +80,6 @@ class ArmyFightService extends Service
     private function isStalemate()
     {
         return ($this->army1->getHealth() == $this->army2->getHealth())
-            || ($this->army1->getHealth() < 0 && $this->army2->getHealth() < 0);
+            || ($this->army1->getHealth() < 0 || $this->army2->getHealth() < 0);
     }
 }

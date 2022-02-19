@@ -12,6 +12,11 @@ class TimeService extends Service
         date_default_timezone_set('Europe/Zagreb');
     }
 
+    public function getHours()
+    {
+        return date("Hi");
+    }
+
     public function getTimeOfDay()
     {
         $hour = $this->getCurrentHour();
@@ -26,6 +31,6 @@ class TimeService extends Service
 
     private function getCurrentHour()
     {
-        return intval(date('G'));
+        return intval(date('g'));
     }
 }
