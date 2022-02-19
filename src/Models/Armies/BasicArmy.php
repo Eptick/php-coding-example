@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Armies;
 
 use App\Models\Reports\{Report, BattleReportBuilder};
 

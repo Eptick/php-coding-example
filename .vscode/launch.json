@@ -19,7 +19,7 @@
             "port": 9003,
             "serverReadyAction": {
                 "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
-                "uriFormat": "http://localhost:%s",
+                "uriFormat": "http://localhost:%s?army1=30&army2=40",
                 "action": "openExternally"
             }
         }

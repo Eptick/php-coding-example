@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\{Service, SnowArmyFactory};
-use App\Models\Army;
+use App\Models\Armies\Army;
 use App\Enums\TimeOfDay;
 use App\Models\Reports\Report;
 

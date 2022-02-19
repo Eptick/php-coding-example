@@ -2,7 +2,7 @@
 
 namespace App\Models\Reports;
 
-use App\Models\Army;
+use App\Models\Armies\Army;
 
 class BattleReportBuilder implements ReportBuilder
 {
