@@ -2,12 +2,12 @@
 
 namespace App\Models\Effects;
 
-use App\Models\Armies\{SnowArmy};
+use App\Models\Armies\{SpecOpsArmy};
 
 class NightEffect extends BasicEffect
 {
     protected static $affects = [
-        SnowArmy::class
+        SpecOpsArmy::class
     ];
 
     public function powerEffect(): int

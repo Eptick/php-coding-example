@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\{Service, SnowArmyFactory};
+use App\Service;
 use App\Models\Armies\Army;
 use App\Enums\TimeOfDay;
 use App\Models\Reports\Report;
@@ -31,11 +31,12 @@ class ArmyFightService extends Service
     {
         $this->setTheMood();
 
-        $snowArmyFactory = new SnowArmyFactory();
-
         $this->armyService->createArmies([$army1, $army2]);
         $this->naration->describeBattleStarting();
-        $this->effectService->useBattleReadyEffects();
+        $this->effectService->useBattleReadyEffects(
+            $this->timeOfDay,
+            $this->weather
+        );
         while (!$this->isGameOver()) {
             $this->takeTurn();
         }

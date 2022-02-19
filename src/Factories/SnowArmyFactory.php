@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Factories;
 
 use App\Models\Armies\{SnowArmy, Army};
 
 class SnowArmyFactory implements ArmyFactory
 {
-    public function createArmy(string $name, int $numberOfSoldiers): Army
+    public static function createArmy(string $name, int $numberOfSoldiers): Army
     {
         return new SnowArmy($name, $numberOfSoldiers);
     }

@@ -2,21 +2,20 @@
 
 namespace App\Models\Effects;
 
-use App\Models\Armies\{SnowArmy, TacticalArmy};
+use App\Models\Armies\{SnowArmy};
 
-class MorningEffect extends BasicEffect
+class SnowEffect extends BasicEffect
 {
     protected static $affects = [
-        SnowArmy::class,
-        TacticalArmy::class,
+        SnowArmy::class
     ];
 
     public function powerEffect(): int
     {
-        return 3;
+        return 15;
     }
     public function bodyCountEffect(): int
     {
-        return 0;
+        return 30;
     }
 }

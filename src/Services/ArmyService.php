@@ -3,13 +3,29 @@
 namespace App\Services;
 
 use App\Service;
-use App\SnowArmyFactory;
+use App\Factories\{
+    ArmyFactory,
+    SnowArmyFactory,
+    AirForceArmyFactory,
+    ArmouredArmyFactory,
+    NavySealsArmyFactory,
+    SpecOpsArmyFactory,
+    TacticalArmyFactory,
+};
 use App\Models\Armies\Army;
 
 class ArmyService extends Service
 {
     private array $armies = [];
     private NarationService $naration;
+    private $armyFactories = [
+        SnowArmyFactory::class,
+        AirForceArmyFactory::class,
+        ArmouredArmyFactory::class,
+        NavySealsArmyFactory::class,
+        SpecOpsArmyFactory::class,
+        TacticalArmyFactory::class,
+    ];
 
     protected function __construct()
     {
@@ -18,12 +34,14 @@ class ArmyService extends Service
 
     public function createArmies(array $numberOfSoldiers)
     {
-        // TODO Randomize the factories
-        $snowArmyFactory = new SnowArmyFactory();
-
         foreach ($numberOfSoldiers as $key => $value) {
             $name = "Army " . $key + 1;
-            $this->armies[] = $snowArmyFactory->createArmy($name, $value);
+            $factory =  $this->getRandomArmyFactory();
+            $this->armies[] = call_user_func(
+                [$factory, 'createArmy'],
+                $name,
+                $value,
+            );
         }
     }
 
@@ -70,5 +88,10 @@ class ArmyService extends Service
             }
             return $army::class === $type;
         });
+    }
+
+    public function getRandomArmyFactory(): string
+    {
+        return $this->armyFactories[array_rand($this->armyFactories)];
     }
 }

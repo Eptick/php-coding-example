@@ -31,6 +31,6 @@ class TimeService extends Service
 
     private function getCurrentHour()
     {
-        return intval(date('g'));
+        return intval(date('G'));
     }
 }
