@@ -9,7 +9,9 @@ class Kernel
         try {
             $app->boot();
         } catch (\Throwable $th) {
-            echo "Error while booting application: " . $th->getMessage();
+            echo "Error while booting application: "
+            . $th->getMessage() . PHP_EOL
+            . " File: " . $th->getFile();
         }
     }
 }

@@ -8,6 +8,6 @@ class WebOutputService extends Service implements Output
 {
     public function write($content)
     {
-        echo $content . '<br>';
+        echo $content . '<br>' . PHP_EOL;
     }
 }

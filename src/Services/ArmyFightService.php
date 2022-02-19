@@ -9,35 +9,35 @@ use App\Models\Reports\Report;
 
 class ArmyFightService extends Service
 {
-    private Army $army1;
-    private Army $army2;
     private int $timeOfDay;
     private int $weather;
     private float $temperature;
     private NarationService $naration;
+    private ArmyService $armyService;
     private WeatherService $weatherService;
     private TimeService $timeService;
+    private EffectService $effectService;
 
     protected function __construct()
     {
         $this->naration = NarationService::getInstance();
+        $this->armyService = ArmyService::getInstance();
         $this->weatherService = WeatherService::getInstance();
         $this->timeService = TimeService::getInstance();
+        $this->effectService = EffectService::getInstance();
     }
 
     public function initiateFight($army1, $army2)
     {
         $this->setTheMood();
+
         $snowArmyFactory = new SnowArmyFactory();
 
-        $this->army1 = $snowArmyFactory->createArmy("First army", $army1);
-        $this->army2 = $snowArmyFactory->createArmy("Second army", $army2);
-
-
+        $this->armyService->createArmies([$army1, $army2]);
         $this->naration->describeBattleStarting();
+        $this->effectService->useBattleReadyEffects();
         while (!$this->isGameOver()) {
             $this->takeTurn();
-            $this->naration->write("turn");
         }
         $this->determineTheWinner();
     }
@@ -55,31 +55,25 @@ class ArmyFightService extends Service
 
     private function takeTurn()
     {
-        $report = $this->army1->attack($this->army2);
-        $this->naration->write($report->getContent());
-        $report = $this->army2->attack($this->army1);
-        $this->naration->write($report->getContent());
+        $this->armyService->brawl();
     }
 
     private function isGameOver()
     {
-        return $this->army1->isDead() || $this->army2->isDead();
+        return $this->armyService->numberOfArmiesAlive() <= 1;
     }
 
     private function determineTheWinner()
     {
         if ($this->isStalemate()) {
             $this->naration->declareStalemate();
-        } elseif ($this->army1->getHealth() > $this->army2->getHealth()) {
-            $this->naration->declareWinner($this->army1);
-        } else {
-            $this->naration->declareWinner($this->army2);
+            return;
         }
+        $this->naration->declareWinner($this->armyService->getWinner());
     }
 
     private function isStalemate()
     {
-        return ($this->army1->getHealth() == $this->army2->getHealth())
-            || ($this->army1->getHealth() < 0 || $this->army2->getHealth() < 0);
+        return $this->armyService->numberOfArmiesAlive() <= 0;
     }
 }

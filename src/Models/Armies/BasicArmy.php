@@ -2,7 +2,8 @@
 
 namespace App\Models\Armies;
 
-use App\Models\Reports\{Report, BattleReportBuilder};
+use App\Models\Reports\{Report, BattleReportBuilder, EffectReportBuilder};
+use App\Models\Effects\Effect;
 
 abstract class BasicArmy implements Army
 {
@@ -26,7 +27,8 @@ abstract class BasicArmy implements Army
         return (new BattleReportBuilder())
             ->who($this)
             ->dealtDamage($army->defend($this))
-            ->to($army);
+            ->to($army)
+            ->soldiersLeft($army);
     }
 
     public function defend($army): int
@@ -38,7 +40,7 @@ abstract class BasicArmy implements Army
     {
         $strengthDifference = $this->getAttackDamage() - $dmg;
         // formula taken and modified from civilization 6 combat mechanics
-        $dmg = round(10 * pow(M_EULER, 0.4 * $strengthDifference) * (rand(80, 120) / 100));
+        $dmg = round(10 * pow(M_EULER, 0.04 * $strengthDifference) * (rand(80, 120) / 100));
         $this->numberOfSoldiers -= $dmg;
         return $dmg;
     }
@@ -56,5 +58,22 @@ abstract class BasicArmy implements Army
     public function getHealth(): int
     {
         return $this->numberOfSoldiers;
+    }
+
+    public function affectDamage(int $damage): Report
+    {
+        $this->attackDamage += $damage;
+        $this->attackDamage = max(1, $this->attackDamage);
+        return (new EffectReportBuilder())
+            ->who($this)
+            ->damageAffected($damage);
+    }
+    public function affectBodyCount(int $soldiers): Report
+    {
+        $this->numberOfSoldiers += $soldiers;
+        $this->numberOfSoldiers = max(1, $this->numberOfSoldiers);
+        return (new EffectReportBuilder())
+            ->who($this)
+            ->bodyCountAffected($soldiers);
     }
 }

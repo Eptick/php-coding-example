@@ -4,7 +4,7 @@ namespace App;
 
 use App\Services\ApplicationStartupService;
 
-class HttpApplication implements Application
+class MyApplication extends HttpApplication
 {
     public function boot()
     {

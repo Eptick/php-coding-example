@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\{Service, Output};
-use App\Models\Army;
+use App\Models\Armies\Army;
+use App\Models\Effects\Effect;
+use App\Models\Reports\Report;
 use App\Enums\{TimeOfDay, Weather};
 
 class NarationService extends Service
@@ -77,10 +79,28 @@ class NarationService extends Service
         $this->output->write("Everybody died. It's a stalemate");
     }
 
-    public function declareWinner(Army &$army)
+    public function declareWinner(Army $army)
     {
         $name = $army->getName();
         $soldiersLeft = $army->getHealth();
         $this->write("$name wins with $soldiersLeft soldiers left");
+    }
+
+    public function describeReport(Report $report)
+    {
+        $this->write($report->getContent());
+    }
+
+    public function describeEffects(Army $army, Effect $effect, array $reports)
+    {
+        if (count($reports) <= 0) {
+            return;
+        }
+        $effectName = $effect->getName();
+        $armyName = $army->getName();
+        $this->write("Applying effect $effectName to $armyName");
+        foreach ($reports as $report) {
+            $this->write($report->getContent());
+        }
     }
 }

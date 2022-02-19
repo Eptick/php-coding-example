@@ -4,20 +4,8 @@ namespace App\Models\Reports;
 
 use App\Models\Armies\Army;
 
-class BattleReportBuilder implements ReportBuilder
+class BattleReportBuilder extends BasicReport
 {
-    protected $base;
-
-    public function __construct()
-    {
-        $this->reset();
-    }
-
-    protected function reset(): void
-    {
-        $this->base = new \stdClass();
-    }
-
     public function who(Army $army): BattleReportBuilder
     {
         $this->reset();
@@ -37,29 +25,20 @@ class BattleReportBuilder implements ReportBuilder
         return $this;
     }
 
-    public function addText(string $text): BattleReportBuilder
+    public function soldiersLeft(Army $army): BattleReportBuilder
     {
-        $this->addAdditionalText($text);
+        $this->base->soldiersLeft = " and it has "
+            . max(0, $army->getHealth())
+            . " soldiers left";
         return $this;
-    }
-
-    private function addAdditionalText($text)
-    {
-        if (!isset($this->base->additional)) {
-            $this->base->additional = array();
-        }
-        $this->base->additional[] = $text;
     }
 
     public function getContent(): string
     {
-        $content = "";
-        $content .= $this->base->who;
-        $content .= $this->base->damage;
-        $content .= $this->base->to;
-        if (strlen($content) > 0) {
-            $content .= ".";
-        }
-        return $content;
+        $this->content .= $this->base->who;
+        $this->content .= $this->base->damage;
+        $this->content .= $this->base->to;
+        $this->content .= $this->base->soldiersLeft;
+        return parent::getContent($this->content);
     }
 }
