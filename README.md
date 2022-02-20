@@ -68,7 +68,6 @@ Output is the winning army.
 
 ### How to submit your solution
 1. Create a private Github repository that will contain your solution.
-2. Add Github account https://github.com/bornfightdev as collaborator on the repository.
 
 ### Disclaimer
 Your solution will only be used for hiring evaluation purposes.
