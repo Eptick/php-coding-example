@@ -6,7 +6,7 @@ use App\Models\Armies\{SnowArmy};
 
 class SnowEffect extends BasicEffect
 {
-    protected static $affects = [
+    public static $affects = [
         SnowArmy::class
     ];
 

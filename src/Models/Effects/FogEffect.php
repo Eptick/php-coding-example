@@ -6,7 +6,7 @@ use App\Models\Armies\{AirForceArmy, ArmouredArmy, SnowArmy, TacticalArmy };
 
 class FogEffect extends BasicEffect
 {
-    protected static $affects = [
+    public static $affects = [
         AirForceArmy::class,
         ArmouredArmy::class,
         SnowArmy::class,

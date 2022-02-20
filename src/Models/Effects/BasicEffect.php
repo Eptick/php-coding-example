@@ -4,7 +4,7 @@ namespace App\Models\Effects;
 
 abstract class BasicEffect implements Effect
 {
-    protected static $affects = [];
+    public static $affects = [];
 
     public function powerEffect(): int
     {

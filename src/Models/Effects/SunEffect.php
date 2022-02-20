@@ -6,7 +6,7 @@ use App\Models\Armies\{AirForceArmy, ArmouredArmy, TacticalArmy};
 
 class SunEffect extends BasicEffect
 {
-    protected static $affects = [
+    public static $affects = [
         AirForceArmy::class,
         ArmouredArmy::class,
         TacticalArmy::class,

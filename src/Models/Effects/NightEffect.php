@@ -6,7 +6,7 @@ use App\Models\Armies\{SpecOpsArmy};
 
 class NightEffect extends BasicEffect
 {
-    protected static $affects = [
+    public static $affects = [
         SpecOpsArmy::class
     ];
 

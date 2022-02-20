@@ -6,7 +6,7 @@ use App\Models\Armies\{TacticalArmy, AirForceArmy, ArmouredArmy};
 
 class AfternoonEffect extends BasicEffect
 {
-    protected static $affects = [
+    public static $affects = [
         TacticalArmy::class,
         AirForceArmy::class,
         ArmouredArmy::class,
