@@ -3,7 +3,7 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use App\Models\Armies\{AirForceArmy, TacticalArmy, Army};
+use App\Models\Armies\{AirForceArmy, TacticalArmy};
 use App\Models\Effects\{MorningEffect, FogEffect, Effect, BasicEffect};
 
 final class EffectsTest extends TestCase
