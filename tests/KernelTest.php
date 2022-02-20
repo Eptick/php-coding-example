@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use App\HttpApplication;
+use App\{Kernel, HttpApplication};
 
 final class KernelTest extends TestCase
 {
