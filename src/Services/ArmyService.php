@@ -92,7 +92,7 @@ class ArmyService extends Service
         });
     }
 
-    public function getRandomArmyFactory(): string
+    private function getRandomArmyFactory(): string
     {
         return $this->armyFactories[array_rand($this->armyFactories)];
     }
